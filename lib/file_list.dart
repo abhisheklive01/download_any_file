@@ -2,9 +2,10 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:download_any_file/check_permission.dart';
+import 'package:download_any_file/directory_path.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart' as Path;
 import 'package:open_file/open_file.dart';
+import 'package:path/path.dart' as Path;
 
 class FileList extends StatefulWidget {
   FileList({super.key});
@@ -129,11 +130,11 @@ class _TileListState extends State<TileList> {
   String fileName = "";
   late String filePath;
   late CancelToken cancelToken;
-  var getPathFile = "DirectoryPath()";
+  var getPathFile = DirectoryPath();
 
   startDownload() async {
     cancelToken = CancelToken();
-    var storePath = await" getPathFile.getPath()";
+    var storePath = await getPathFile.getPath();
     filePath = '$storePath/$fileName';
     setState(() {
       dowloading = true;
@@ -167,7 +168,7 @@ class _TileListState extends State<TileList> {
   }
 
   checkFileExit() async {
-    var storePath = await "getPathFile.getPath()";
+    var storePath = await getPathFile.getPath();
     filePath = '$storePath/$fileName';
     bool fileExistCheck = await File(filePath).exists();
     setState(() {
@@ -177,6 +178,7 @@ class _TileListState extends State<TileList> {
 
   openfile() {
     OpenFile.open(filePath);
+    print("fff $filePath");
   }
 
   @override
